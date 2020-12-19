@@ -1,0 +1,23 @@
+<h4 class="center">Editar Log</h4>
+<%= form_with(model: @log, local: true, html: {class: "row"}) do |form| %>
+  <div class="input-field col s12">
+    <%= form.select(:cond_id, @conds.all.collect { |c| [c.name, c.id] }) %>
+    <%= form.label :cond_id, "Condomínio" %>
+  </div>
+  <div class="input-field col s12">
+    <%= form.text_field :problem %>
+    <%= form.label :problem, "Problema", class: "active" %>
+  </div>
+  <div class="input-field col s12">
+    <%= form.select(:tech_id, @techs.all.collect { |c| [c.name, c.id] }) %>
+    <%= form.label :tech_id, "Técnico" %>
+  </div>
+  <div class="input-field col s12">
+    <%= form.submit "Confirmar", class: "btn" %>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+  </div>
+<% end %>
+
+  

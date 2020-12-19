@@ -1,0 +1,75 @@
+<table>
+  <thead>
+    <tr>
+        <th>Condomínio</th>
+        <th>Problema</th>
+        <th>Técnico</th>
+        <th>Operador</th>
+        <th>Data</th>
+        <th></th>
+        <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @logs.each do |log| %>
+      <tr class="<% if log.situation == false %>red-text<% elsif log.situation == true %>green-text<% else %>black-text<% end %>">
+        <td><%= log.cond.name %></td>
+        <td><%= log.problem %></td>
+        <td><%= log.tech.name %></td>
+        <td><%= log.user.first_name %></td>
+        <td><%= log.created_at.strftime("%d/%m/%Y") %></td>
+        <td>
+          <%= link_to resolve_log_path(log), method: :patch do %>
+            <i class="material-icons">check</i>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to edit_log_path(log), data: { remote: true, target: "modal2" } do %>
+            <i class="material-icons">create</i>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<div class="fixed-action-btn">
+  <button data-target="modal1" class="btn-floating btn-large blue modal-trigger">
+    <i class="large material-icons">add</i>
+  </button>
+</div>
+
+<!-- Modal Structure -->
+<div id="modal1" class="modal">
+  <div class="modal-content">
+    <h4 class="center">Add Log</h4>
+      <%= form_with(model: @log, local: true, html: {class: "row"}) do |form| %>
+        <div class="input-field col s12">
+          <%= form.select(:cond_id, @conds.all.collect { |c| [c.name, c.id] }) %>
+          <%= form.label :cond_id, "Condomínio"%>
+        </div>
+        <div class="input-field col s12">
+          <%= form.text_field :problem %>
+          <%= form.label :problem, "Problema" %>
+        </div>
+        <div class="input-field col s12">
+          <%= form.select(:tech_id, @techs.all.collect { |c| [c.name, c.id] }) %>
+          <%= form.label :tech_id, "Técnico" %>
+        </div>
+        <div class="input-field col s12">
+          <%= form.submit "Confirmar", class: "btn" %>
+        </div>
+      <% end %>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+    </div>
+  </div>
+</div>
+
+
+<div id="modal2" class="modal">
+  <div class="modal-content" id="edit-modal">
+  </div>
+</div>

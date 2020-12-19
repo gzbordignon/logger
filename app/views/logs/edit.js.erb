@@ -1,0 +1,5 @@
+$(document).ready(function(){
+    $("#edit-modal").html("<%= j render partial: "edit_form", locals: {log: @log, conds: @conds, techs: @techs} %>")
+    $("select").formSelect()
+    $("#modal2").modal("open");
+});
